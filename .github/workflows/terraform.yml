@@ -9,7 +9,7 @@ on:
       - "main"
 
 jobs:
-  shared:
+  terraform:
     uses: DevOpsPlusTeam/github-shared-actions/.github/workflows/terraform-pipeline.yaml@main
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
