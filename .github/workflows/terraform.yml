@@ -10,7 +10,6 @@ on:
       - '**.md'
     branches:
       - "main"
-      - "master"
 
 jobs:
   shared:
