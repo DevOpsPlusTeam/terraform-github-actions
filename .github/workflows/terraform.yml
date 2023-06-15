@@ -10,4 +10,4 @@ on:
 
 jobs:
   shared:
-    uses: DevOpsPlusTeam/github-shared-actions/.github/workflows/terraform/feature-branch.yaml@main
+    uses: DevOpsPlusTeam/github-shared-actions/.github/workflows/terraform-pipeline.yaml@main
