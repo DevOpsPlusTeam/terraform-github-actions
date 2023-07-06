@@ -18,6 +18,59 @@
 #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
 #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+
+#### Start of the AWS pipeline ####
+# name: 'Terraform'
+
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+
+# permissions:
+#   id-token: write
+#   contents: read
+
+# jobs:
+#   terraform:
+#     name: 'Terraform'
+#     runs-on: ubuntu-latest
+#     environment: production
+#     defaults:
+#       run:
+#         shell: bash
+
+#     steps:
+#     - name: Configure aws credentials
+#       uses: aws-actions/configure-aws-credentials@v2
+#       with:
+#         role-to-assume: arn:aws:iam::144057166273:role/github-runner-role
+#         aws-region: us-east-1
+
+#     - name: Checkout
+#       uses: actions/checkout@v3
+
+#     - name: Setup Terraform
+#       uses: hashicorp/setup-terraform@v2
+#       with:
+#         terraform_version: 1.4.6
+
+#     - name: Terraform Init
+#       run: terraform init
+
+#     - name: Terraform Format
+#       run: terraform fmt -check
+
+#     - name: Terraform Plan
+#       run: terraform plan -input=false
+
+#       # On push to "main", deploy the Terraform infrastructure
+#     - name: Terraform Apply
+#       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+#       run: terraform apply -auto-approve -input=false
+#### End of the AWS pipeline ####
+
+#### Start of the AWS pipeline ####
 name: 'Terraform'
 
 on:
@@ -39,11 +92,12 @@ jobs:
         shell: bash
 
     steps:
-    - name: Configure aws credentials
-      uses: aws-actions/configure-aws-credentials@v2
+    - name: 'Az CLI login'
+      uses: azure/login@v1
       with:
-        role-to-assume: arn:aws:iam::144057166273:role/github-runner-role
-        aws-region: us-east-1
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Checkout
       uses: actions/checkout@v3
@@ -66,3 +120,4 @@ jobs:
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve -input=false
+#### End of the AWS pipeline ####

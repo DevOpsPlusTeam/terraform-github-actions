@@ -1,20 +1,20 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "4.52.0"
-    }
-    random = {
-      source  = "hashicorp/random"
-      version = "3.4.3"
-    }
-  }
-  required_version = ">= 1.1.0"
-}
+# terraform {
+#   required_providers {
+#     aws = {
+#       source  = "hashicorp/aws"
+#       version = "4.52.0"
+#     }
+#     random = {
+#       source  = "hashicorp/random"
+#       version = "3.4.3"
+#     }
+#   }
+#   required_version = ">= 1.1.0"
+# }
 
-provider "aws" {
-  region = "ca-central-1"
-}
+# provider "aws" {
+#   region = "ca-central-1"
+# }
 
 # resource "random_pet" "sg" {}
 
@@ -69,3 +69,25 @@ provider "aws" {
 # output "web-address" {
 #   value = "${aws_instance.web.public_dns}:8080"
 # }
+
+
+#### Azure terraform ####
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">=3.53.0"
+    }
+  }
+
+  backend "azurerm" {
+    resource_group_name  = "terraform_state"
+    storage_account_name = "terraformstaterunner"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
+}
+
+provider "azurerm" {
+  features {}
+}
